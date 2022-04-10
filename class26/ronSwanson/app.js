@@ -38,8 +38,10 @@ let RonSwanson=function (){
         this.wisdom = function (){
             //get rons wisdom
             let answer=words
+
             //erase rons wisdom container
             words=''
+
             // return rons words
             return answer;
         }
@@ -66,8 +68,10 @@ function placeDom(arr,location){
             let child = domPlace.firstChild;
             domPlace.insertBefore(p,child)
         //     domPlace.firstChild.insertBefore(p)
+        }else{
+             domPlace.appendChild(p);
         }
-        // domPlace.appendChild(p);
+        
     })
 
     console.log(paragraphs)
