@@ -117,8 +117,12 @@ function changeInfo(placeHere_, displayThis_){
 function getDogPic(apiLink_,place_="#dogpic"){
     console.log('inside getDogPic')
     console.log(apiLink_)
+
     //get the image container
     const target= document.querySelector(place_);
+
+    //change background
+    const background= document.querySelector(".row");
 
     //fetch fucntion to get dog image from api link
     
@@ -129,10 +133,13 @@ function getDogPic(apiLink_,place_="#dogpic"){
             console.log('inside getDogPic/ fetch')
 
             //change src for image
-           target.src= data.message
-            
+        //    target.src= data.message;
+            target.src='https://images.dog.ceo/breeds/labrador/IMG_4709.jpg'
+           background.style.backgroundImage=`url(${data.message})`
 
         })
+
+
     
 
     

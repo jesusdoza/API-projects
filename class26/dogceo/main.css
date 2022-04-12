@@ -1,0 +1,107 @@
+*{
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+h1{
+    text-align: left;
+}
+
+
+.row{
+    background-image: url("https://images.dog.ceo/breeds/beagle/n02088364_14863.jpg");
+    background-size: 150%;
+    z-index:0 ;
+    width: 100%;
+    padding: 20px;
+    border:1px green solid;
+
+    /* TYPOGRAPHY */
+    text-align: center;
+    position: relative;
+
+    height: 100vh;
+}
+
+.content{
+    background-color: rgba(139, 87, 27, 0.433);
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+
+    
+}
+
+.dog,
+.dog-info{
+    display: inline-block;
+    border:10px red solid;
+    width: 40%;
+    height: 100%;
+}
+
+.pic-container{
+    height: 70%;
+    border: orange 5px solid;
+}
+.pic-container div{
+    height: 100%;
+    width: 100%;
+    border: black 4px solid;
+}
+
+#dogpic{
+    width: 100%;
+    height:100%;
+    border: green solid 3px;
+
+}
+
+
+
+
+.breed-select{
+    max-height: 20%;
+    border: pink 5px solid;
+}
+
+.dog form select{
+    
+    border-radius: 10px;
+    width: 100%;
+    height: 20%;
+
+ 
+    /* typography */
+    font-size: 1.5rem;
+    text-align: center;
+}
+.dog-info{
+    vertical-align: top;
+    text-align: left;
+
+
+    /* TYPOGRAPHY */
+    font-size: 2rem;
+    
+    
+}
+
+
+
+.row .overlay{
+    width: 100%;
+    height: 100%;
+    display: block;
+    position:absolute;
+    background-color: rgb(196, 156, 156);
+    z-index: -1;
+    top:0;
+    opacity: .2;
+    left:0;
+    
+}
