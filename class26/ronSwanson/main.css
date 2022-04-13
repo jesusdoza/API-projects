@@ -1,8 +1,33 @@
+* {
+ box-sizing: border-box;
+}
+body{
+    background: linear-gradient(gray, brown);
+}
 
 #ron-speaks p:first-child {
     border: 1px solid green;
 }
 
+#ron-speaks p{
+    font-family:'Bebas Neue', cursive;
+    background-color: gray;
+    color: rgb(164, 54, 54);
+    text-shadow: 1px 1px black;
+    width: 100%;
+    line-height: 2rem;
+    margin: 0 auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    
+}
+#ron,
+#quotes{
+    width: 49%;
+    display: inline-block;
+    border: black 3px solid;
+    vertical-align: top;
+}
 
 
 

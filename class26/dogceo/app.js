@@ -59,11 +59,12 @@ function getDogBreeds(){
 }
 
 
-
+// ====================================WORKGIN ON BOXER CORRECT QUERY
 // gets search results for dog breed from wiki
 function getDogWiki(dogBreed='hound'){
+    const dogSearch=dogBreed +'+dog';
     // fetch(`${wiki}?action=query&list=prop&srsearch=${dogBreed}&format=json`)  // this does not work
-   fetch(`https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&srsearch=${dogBreed}&format=json`)  //good one
+   fetch(`https://en.wikipedia.org/w/api.php?origin=*&action=query&list=search&srsearch=${dogSearch}&format=json`)  //good one
 //    fetch(`https://en.wikipedia.org/w/api.php?origin=*&action=query&prop=pageprops&titles=hound&format=json`)
     .then((res)=>{return res.json();})
     .then(data => {
@@ -133,8 +134,8 @@ function getDogPic(apiLink_,place_="#dogpic"){
             console.log('inside getDogPic/ fetch')
 
             //change src for image
-        //    target.src= data.message;
-            target.src='https://images.dog.ceo/breeds/labrador/IMG_4709.jpg'
+           target.src= data.message;
+            // target.src='https://images.dog.ceo/breeds/labrador/IMG_4709.jpg'
            background.style.backgroundImage=`url(${data.message})`
 
         })

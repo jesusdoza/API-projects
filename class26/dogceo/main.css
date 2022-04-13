@@ -1,5 +1,6 @@
 *{
     box-sizing: border-box;
+    border-radius: 10px;
 }
 
 a{
@@ -11,6 +12,17 @@ h1{
     text-align: left;
 }
 
+h2{
+    font-size: 2rem;
+    display: block;
+    color: white;
+    position: absolute;
+    top:0;
+    text-align: center;
+    left:0;
+    right: 0;
+}
+
 
 .row{
     background-image: url("https://images.dog.ceo/breeds/beagle/n02088364_14863.jpg");
@@ -18,7 +30,7 @@ h1{
     z-index:0 ;
     width: 100%;
     padding: 20px;
-    border:1px green solid;
+    
 
     /* TYPOGRAPHY */
     text-align: center;
@@ -27,11 +39,22 @@ h1{
     height: 100vh;
 }
 
+.row #title{
+    height: 8%;
+}
+.row .content{
+    height: 90%;
+}
 .content{
-    background-color: rgba(139, 87, 27, 0.433);
+    background-color: rgba(255, 255, 255, 0.433);
     display: flex;
     justify-content: space-around;
-    height: 100%;
+    height: 90%;
+    border: red 4px solid;
+
+    align-items: center;
+    
+    
 
     
 }
@@ -39,14 +62,15 @@ h1{
 .dog,
 .dog-info{
     display: inline-block;
-    border:10px red solid;
+    /* border:10px red solid; */
     width: 40%;
-    height: 100%;
+    height: 80%;
+    border:3px solid black;
 }
 
 .pic-container{
     height: 70%;
-    border: orange 5px solid;
+    /* border: orange 5px solid; */
 }
 .pic-container div{
     height: 100%;
@@ -57,7 +81,7 @@ h1{
 #dogpic{
     width: 100%;
     height:100%;
-    border: green solid 3px;
+    /* border: green solid 3px; */
 
 }
 
@@ -66,7 +90,7 @@ h1{
 
 .breed-select{
     max-height: 20%;
-    border: pink 5px solid;
+    /* border: pink 5px solid; */
 }
 
 .dog form select{
@@ -74,6 +98,8 @@ h1{
     border-radius: 10px;
     width: 100%;
     height: 20%;
+
+    background-color: rgb(150, 74, 74);
 
  
     /* typography */
@@ -98,7 +124,7 @@ h1{
     height: 100%;
     display: block;
     position:absolute;
-    background-color: rgb(196, 156, 156);
+    /* background-color: rgb(196, 156, 156); */
     z-index: -1;
     top:0;
     opacity: .2;
