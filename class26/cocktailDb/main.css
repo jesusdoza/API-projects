@@ -1,0 +1,16 @@
+* {
+    box-sizing: border-box;
+}
+body{
+    padding: 0 40px;
+    
+}
+
+
+main,aside{
+    vertical-align: top;
+    width:49% ;
+    border:black 1px solid;
+    display: inline-block;
+
+}
