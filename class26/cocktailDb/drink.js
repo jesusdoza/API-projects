@@ -18,6 +18,7 @@ let ingredientsChoosen=new Set;  // ingredients user picks
 let fullDrinkDetails= new Set;   // store full drink info for matching drinks
 let fullIngredientList= new Set; //store ingredients to keep from fetching
 
+let inDom=new Set;// is it already in dom?
 //call on load
 getDrinkIngredientList()
 
@@ -34,22 +35,12 @@ getDrinkIngredientList()
 
 function sendQuery(){
 
-let choosenIngredients = document.querySelectorAll('#ingredient-choosen li')
 
-//loop through user choosen ingredients 
-choosenIngredients.forEach((e)=>{
-    //will add to set all matching
-    getDrinksByIngredients(e.innerText)
-})
 
 console.log(drinksMatching)
 
-// // for all drinks that matched from api
-drinksMatching.forEach((drinkId)=>{
+getDrinksByIngredients()
 
-    drinkDetails(drinkId)
-
-})
 
 }
 
@@ -58,10 +49,12 @@ drinksMatching.forEach((drinkId)=>{
 
 
    //fetch full details of  1 drink
-   function drinkDetails(drinkId_){
+   function drinkDetails(){
     
     
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId_}`)
+    drinksMatching.forEach((e)=>{
+
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${e.idDrink}`)
     .then(res=>res.json())
     .then((data)=>{
         test=data;
@@ -109,63 +102,82 @@ drinksMatching.forEach((drinkId)=>{
                 <p>${instructions}</p>
             </section>
         </section>  
-       `
+       `//==============================big text string
 
-       appendTo(drinkLi,'#drink-list');
-    })
+        //if dom does not already have this ID
+       if(!inDom.has(id)){
 
-   
+        let domPlace=document.querySelector('#drink-list')
+        //if already children place before first child
+        if(domPlace.firstChild){
+            let child = domPlace.firstChild;
+            domPlace.insertBefore(drinkLi,child)
+        }
+        else{//else doesnt matter just append
+                domPlace.appendChild(drinkLi);
+        }
+
+        inDom.add(id)//dont want to add multiples to dom
+
+       }//end of if in DOM
+       
+
+
+    })//then end
 
 
 
+
+    })//for each end
  }
 
 
 
 
-
-//fetch drinks that contain ingredient string and add to set
-function getDrinksByIngredients(ingredient_){
+//not working right
+//fetch drinks that contain ingredient string and add to set one at a time
+// function getDrinksByIngredients(ingredient_){
     
 
-    console.log(' call getdrinksbyingredients: ')
-    console.log(ingredient_)
-            fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_}`)
-            .then(res=>res.json())
-            .then( data=>{
-                console.log(data)
-                data.drinks.forEach((matchingDrink)=>{
-                    drinksMatching.add(matchingDrink.idDrink)
-                })
-             })
-            
-        }
-
-
-
-
-
-//fetch drinks that contain ingredient
-// function getDrinksByIngredients___ (){
-//     let choosenIngredients = document.querySelectorAll('#ingredient-choosen li')
-
-//     console.log(' call getdrinksbyingredients')
-//     console.log(choosenIngredients)
-//     choosenIngredients.forEach((e)=>console.log(`ingredient is ${e.innerText}`))
-
-//         choosenIngredients.forEach((ingredient_)=>{
-
-//             fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_.innerText}`)
+//     console.log(' call getdrinksbyingredients: ')
+//     console.log(ingredient_)
+//             fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_}`)
 //             .then(res=>res.json())
 //             .then( data=>{
-    
 //                 console.log(data)
 //                 data.drinks.forEach((matchingDrink)=>{
-//                     drinksMatching.add(matchingDrink)
+//                     drinksMatching.add(matchingDrink.idDrink)
 //                 })
 //              })
-//             })
-//     }
+            
+//         }
+
+
+
+
+
+//fetch drinks that contain ingredient all 
+function getDrinksByIngredients(){
+    let choosenIngredients = document.querySelectorAll('#ingredient-choosen li')
+
+    console.log(' call getdrinksbyingredients')
+    console.log(choosenIngredients)
+    choosenIngredients.forEach((e)=>console.log(`ingredient is ${e.innerText}`))
+
+        choosenIngredients.forEach((ingredient_)=>{
+
+            fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_.innerText}`)
+            .then(res=>res.json())
+            .then( data=>{
+    
+                console.log(data)
+                data.drinks.forEach((matchingDrink)=>{
+                drinksMatching.add(matchingDrink)
+                drinkDetails()
+                })
+             })
+            })
+    }
 
     
  
@@ -210,7 +222,7 @@ function remove(event){
 
 
 
-
+//working
 //fetches array with all ingredients from api if not in set already
 function getDrinkIngredientList(){
 
@@ -248,6 +260,7 @@ function getDrinkIngredientList(){
 
 //insert into dom function
 function appendTo(childNode_, parentSelector_=body){
+
     const parent=document.querySelector(parentSelector_);
 
     parent.appendChild(childNode_);
@@ -256,30 +269,30 @@ function appendTo(childNode_, parentSelector_=body){
 
 }
 
+//NOT USED
+// //fetches drinks by ingredient
+// function fetchDrinkList(ingredient_){
 
-//fetches drinks by ingredient
-function fetchDrinkList(ingredient_){
 
+//     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_}`)
+//     .then((res)=>res.json())
 
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_}`)
-    .then((res)=>res.json())
+//     .then(data => {
+//         console.log(data)
 
-    .then(data => {
-        console.log(data)
-
-        data.drinks.forEach((drink)=>{
-            drinksMatching.add(drink)
-        })
+//         data.drinks.forEach((drink)=>{
+//             drinksMatching.add(drink)
+//         })
 
         
 
 
 
 
-    })
-    .catch(err=> console.log(`error ${err}`))
+//     })
+//     .catch(err=> console.log(`error ${err}`))
 
 
-}
+// }
 
 

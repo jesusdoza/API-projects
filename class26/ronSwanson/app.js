@@ -63,12 +63,12 @@ function placeDom(arr,location){
         p.innerText=element;    //add inner text to paragraph
         paragraphs.push(p);    //push paragraph for later
         
-        
+        //if already a child then insert before it
         if(domPlace.firstChild){
             let child = domPlace.firstChild;
             domPlace.insertBefore(p,child)
         //     domPlace.firstChild.insertBefore(p)
-        }else{
+        }else{//else doesnt matter just append
              domPlace.appendChild(p);
         }
         
