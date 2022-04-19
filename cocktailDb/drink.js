@@ -94,7 +94,7 @@ getDrinksByIngredients()
             </div>
             <section class="drink-info">
                 <h3>${name}</h3>
-                <span>${id}</span>
+                <span>${id}<br></span>
                 <span>${category}</span>
                 
                 <h4>Ingredients</h4>
