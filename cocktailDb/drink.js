@@ -1,6 +1,7 @@
 
 
-
+//get drinks section 
+let drinksArea=document.querySelector('#drink-list')
 
 //get drink button
 let searchButton = document.querySelector('#get-drink');
@@ -19,8 +20,13 @@ let fullDrinkDetails= new Set;   // store full drink info for matching drinks
 let fullIngredientList= new Set; //store ingredients to keep from fetching
 
 let inDom=new Set;// is it already in dom?
+
+let newQuery=false;
+
+
 //call on load
 getDrinkIngredientList()
+
 
 
 
@@ -34,12 +40,27 @@ getDrinkIngredientList()
 // ===============================================================
 
 function sendQuery(){
+//if user added something new
+if(newQuery==true){
+
+    //this new query has started and is now old and should not be rerun
+    newQuery=false;
+
+    //blank drink section for new query
+    drinksArea.innerHTML='';
+
+    //send query for ingredients and so on
+    getDrinksByIngredients()
+}
+
+else{
+    console.log('this query already run add something new')
+}
 
 
 
-console.log(drinksMatching)
 
-getDrinksByIngredients()
+
 
 
 }
@@ -51,13 +72,13 @@ getDrinksByIngredients()
    //fetch full details of  1 drink
    function drinkDetails(){
     
-    
+    //use set to get id of each drink
     drinksMatching.forEach((e)=>{
 
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${e.idDrink}`)
     .then(res=>res.json())
     .then((data)=>{
-        test=data;
+        // test=data;
         let name, 
         id, 
         category, 
@@ -95,6 +116,7 @@ getDrinksByIngredients()
             <section class="drink-info">
                 <h3>${name}</h3>
                 <span>${id}<br></span>
+                <h4>Category: </>
                 <span>${category}</span>
                 
                 <h4>Ingredients</h4>
@@ -156,7 +178,7 @@ getDrinksByIngredients()
 
 
 
-//fetch drinks that contain ingredient all 
+//fetch drinks that contain ingredients
 function getDrinksByIngredients(){
     let choosenIngredients = document.querySelectorAll('#ingredient-choosen li')
 
@@ -164,15 +186,22 @@ function getDrinksByIngredients(){
     console.log(choosenIngredients)
     choosenIngredients.forEach((e)=>console.log(`ingredient is ${e.innerText}`))
 
+    //for each incase multiple ingredients are choosen
         choosenIngredients.forEach((ingredient_)=>{
 
+            //fetch drinks that match the ingredient choosen by user
             fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient_.innerText}`)
             .then(res=>res.json())
             .then( data=>{
     
-                console.log(data)
+                console.log('get drinks by ingredient()'+data)
+
+                //for each of the drinks retrieved 
                 data.drinks.forEach((matchingDrink)=>{
+                //add dink to set 
                 drinksMatching.add(matchingDrink)
+
+                //new fetch function to get drink details
                 drinkDetails()
                 })
              })
@@ -187,10 +216,13 @@ function getDrinksByIngredients(){
 function addIngredient(event){
     //ignore the place holder
     if(event.target.value.toLowerCase()=='default'){
-        console.log(event.target.value)
+        console.log('default value @addIngredient()'+event.target.value)
         return
     }
    
+    //new ingredient choosen this is a new query
+    newQuery=true;
+
     //get the value of target
     let value=event.target.value;
     
@@ -237,10 +269,26 @@ function getDrinkIngredientList(){
     .then(ingredients => {
         console.log(`ingredients are`)
         console.log(ingredients)
-        ingredients.drinks.forEach((item)=>{
-            // console.log(item)
 
+        //order ingredients by alphabetical
+        let sortedIngredients = ingredients.drinks.sort((a,b)=>{
+            if(a.strIngredient1 > b.strIngredient1){
+                return 1
+            }
+            else{
+                return -1
+            }
+        })
+        test=sortedIngredients;
+        
+
+        
+        sortedIngredients.forEach((item)=>{
+            // console.log(item)
+            //create option element for DOM
             let option = document.createElement('option');
+
+
             option.value=item.strIngredient1;
             option.innerText=item.strIngredient1;
 
@@ -250,6 +298,31 @@ function getDrinkIngredientList(){
             //insert into dom at parent selector
             appendTo(option,"#ingredient-select")
         })
+        
+
+        //implement maybe caching of ingredients
+        // localStorage.setItem('fullIngredientList',fullIngredientList)
+
+
+
+
+
+
+        // ingredients.drinks.forEach((item)=>{
+        //     // console.log(item)
+
+        //     let option = document.createElement('option');
+
+
+        //     option.value=item.strIngredient1;
+        //     option.innerText=item.strIngredient1;
+
+        //     //add ingredient to set 
+        //     fullIngredientList.add(item.strIngredient1)
+
+        //     //insert into dom at parent selector
+        //     appendTo(option,"#ingredient-select")
+        // })
         
         // localStorage.setItem('fullIngredientList',fullIngredientList)
     })
