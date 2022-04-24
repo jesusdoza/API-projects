@@ -69,8 +69,7 @@ function getDogWiki(dogBreed='hound'){
     .then((res)=>{return res.json();})
     .then(data => {
 
-        // console.log(data);
-
+        let wikiLink = document.querySelector('#wiki')
         //get snippet of page
         let  dogInfo=data.query.search[0].snippet
         let page=data.query.search[0].title
@@ -78,13 +77,13 @@ function getDogWiki(dogBreed='hound'){
         //    make wiki link
         let  dogLink=`${wikipedia}${page}`
         
-        let anchor= document.createElement('a');    //new anchor 
-        anchor.innerHTML=dogInfo;                 //add snippet info
-        anchor.href=dogLink                       //add wiki link
-        anchor.id='replace'
+        let p= document.createElement('p');    //new anchor 
+        p.innerHTML=dogInfo;                 //add snippet info
+        wikiLink.href=dogLink                       //add wiki link
+        p.id='replace'
 
         //change wiki links
-        changeInfo('.dog-info',anchor)
+        changeInfo('.dog-info',p)
         
         
         

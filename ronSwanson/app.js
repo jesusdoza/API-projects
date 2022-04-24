@@ -3,8 +3,9 @@
 // place rons words here in DOM
     const ronSpeaks = '#ron-speaks'
 
-
+//ask button
 const askButton=document.querySelector('#askButton')
+
 askButton.addEventListener('click',function(event){
     event.preventDefault();
     askRon();
@@ -31,6 +32,7 @@ let RonSwanson=function (){
             .then(data => {
             //    words.push(data)
                 words=data;
+            
             }) 
             .catch(err=> console.log(`error ${err}`)); 
         },
@@ -39,13 +41,18 @@ let RonSwanson=function (){
             //get rons wisdom
             let answer=words
 
-            //erase rons wisdom container
+            //erase rons words container
             words=''
 
             // return rons words
             return answer;
         }
-    }
+
+
+
+
+
+}
 
 
 
@@ -75,29 +82,17 @@ function placeDom(arr,location){
     })
 
     console.log(paragraphs)
-
-    
-
-
-
-
-    
-
 }
 
 
 //asks ron object from user typed in strings
 function askRon(){
-    //will hold rons quotes to display on DOM
 
     //get what user typed in id=subject
     let userWords = document.querySelector('#subject')
 
-    
-
     //parse them into array
     let words = userWords.value.split(' ')
-    
 
     console.log(userWords.value);
 
@@ -113,12 +108,13 @@ function askRon(){
 
     console.log( typeof(ronSays))
     console.log(ronSays)
-     placeDom(ronSays,ronSpeaks);
-
-
-
-
+    placeDom(ronSays,ronSpeaks);
 }
+
+
+
+
+
 
 let ron = new RonSwanson
 

@@ -3,6 +3,7 @@
 }
 body{
     background: linear-gradient(gray, brown);
+    /* height: 100vh; */
 }
 
 #ron-speaks p:first-child {
@@ -14,7 +15,7 @@ body{
     background-color: gray;
     color: rgb(164, 54, 54);
     text-shadow: 1px 1px black;
-    width: 100%;
+    /* width: 100%; */
     line-height: 2rem;
     margin: 0 auto;
     border-radius: 10px;
@@ -23,11 +24,29 @@ body{
 }
 #ron,
 #quotes{
-    width: 49%;
-    display: inline-block;
     border: black 3px solid;
     vertical-align: top;
 }
+
+#ron div img{
+    height: 60%;
+    text-align: center;
+    width: 100%;
+}
+#ron{
+
+}
+
+#query {
+    font-size: 2rem;
+}
+    #query input{
+        display: block;
+        width: 50%;
+        margin: 0 auto;
+        border-radius: 10px;
+        margin: 10px;
+    }
 
 
 

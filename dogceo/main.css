@@ -23,6 +23,10 @@ h2{
     right: 0;
 }
 
+p{
+    margin:0;
+}
+
 
 .row{
     background-image: url("https://images.dog.ceo/breeds/beagle/n02088364_14863.jpg");
@@ -36,54 +40,68 @@ h2{
     text-align: center;
     position: relative;
 
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .row #title{
     height: 8%;
 }
 .row .content{
-    height: 90%;
+    height: 100%;
 }
 .content{
     background-color: rgba(255, 255, 255, 0.433);
     display: flex;
+    /* flex-direction: column; */
     justify-content: space-around;
     height: 90%;
-    border: red 4px solid;
+    /* border: red 4px solid; */
 
-    align-items: center;
+    /* align-items: center; */
     
     
 
     
 }
 
-.dog,
+.dog{
+    width: 40%;
+    /* height: 100%; */
+}
 .dog-info{
-    display: inline-block;
+    /* display: inline-block;
+    display: block; */
     /* border:10px red solid; */
     width: 40%;
     height: 80%;
-    border:3px solid black;
+    /* border:3px solid black; */
 }
 
-.pic-container{
-    height: 70%;
-    /* border: orange 5px solid; */
-}
-.pic-container div{
-    height: 100%;
-    width: 100%;
-    border: black 4px solid;
-}
 
-#dogpic{
-    width: 100%;
-    height:100%;
-    /* border: green solid 3px; */
+        .pic-container{
+            min-height: 70%;
+            /* border: orange 5px solid; */
+        }
+        .pic-container div{
+            height: 100%;
+            width: 100%;
+            /* border: black 4px solid; */
+            
+        }
 
-}
+            #dogpic{
+            width: 100%;
+            max-height: 100%;
+            /* height:100%; */
+            /* border: green solid 3px; */
+
+            }
+
+    #wiki{
+        background-color:gray;
+        color: black;
+        padding: 0 20px;
+    }
 
 
 
@@ -131,3 +149,58 @@ h2{
     left:0;
     
 }
+
+
+/* MEDIA QUERIES
+============================================ */
+
+
+@media  (min-width:100px) {
+    .content{
+        flex-direction: column;
+        /* border: 10px green solid; */
+    }
+
+    .dog,
+    .dog-info{
+        width: 100%;
+    }
+    .dog-info{
+        font-size: 1.5rem;
+    }
+    .row{
+        height: 100vh;
+    }
+
+}
+
+@media (min-width:600px)  {
+    .dog,.dog-info
+    {
+    padding:5px;
+    }
+    .dog-info {
+        font-size:  1.5rem;
+    }
+     .content{
+        flex-direction: row;
+        
+    } 
+    
+}
+
+@media (min-width:830px) {
+    .dog-info {
+        font-size:  1rem;
+    }
+
+    
+}
+
+@media (min-width: 1100px){
+    .dog-info {
+        font-size:  2rem;
+    }
+
+    
+} 
