@@ -23,7 +23,7 @@
  class Tile {
     constructor(id_) {
         this.id = id_; // place on board
-        this.mark = ''; // holds players mark 
+        this.mark = 'test'; // holds players mark 
         this.player=''; //player that has claimed this tile, empty string is falsy
         this.domElement={};
         // this.img='some url' // picture to display if wanted later
@@ -57,6 +57,9 @@ class GameBoard {
         this.gameTiles= new Map; // holds tiles for game
         this.players=[];
         this.currentPlayer=0;
+        this.turnNumber=1
+
+        this.start()
 
     }
     
@@ -87,14 +90,24 @@ class GameBoard {
            //can change inner html with this
         // currentTile.domElement.innerHTML=currentTile.id;
         //    console.log(currentTile)
-           
-
         })
-
-
     }
 
+    //play tic tac toe game
+    play(tileId_=1){
+        if(this.turnNumber<10){
+            const player = this.turnNumber%2 == 0 ? 1 : 0  // gettin player index if odd player[0] even is player[1] 
+            this.claimTile(tileId_, this.players[ player  ].name, this.players[ player ].mark)
 
+            this.showGameBoard()
+            this.turnNumber++
+        }
+        else{
+            console.log('game is over all turns used')
+        }
+
+        
+    }
 
     //add players marks
     addPlayer(playerName_='name',playerMark_='playerMark_'){
@@ -117,7 +130,7 @@ class GameBoard {
 
 
     //when tile is clicked player property is set and mark is also set
-    claimTile(tileId_=1,playerId_='playerName',mark_='testMark'){
+    claimTile(tileId_=1, playerId_='playerName', mark_='testMark'){
         this.gameTiles.get(tileId_).setPlayer(playerId_) //claim for player
         this.gameTiles.get(tileId_).setMark(mark_)  //put players mark in it
 
@@ -158,7 +171,7 @@ class GameBoard {
        const tile2Player=this.gameTiles.get(col_+3).getPlayer() // mid of col
        const tile3Player=this.gameTiles.get(col_+6).getPlayer()  // bottom of col
 
-       console.log(` colWin tile 1 ${tile1Player} tile 2 ${tile2Player} tile 3 ${tile3Player}`)
+    //    console.log(` colWin tile 1 ${tile1Player} tile 2 ${tile2Player} tile 3 ${tile3Player}`)
 
         //compare players
         if(tile1Player==tile2Player && tile1Player==tile3Player){
@@ -181,7 +194,7 @@ class GameBoard {
         const tile2Player=this.gameTiles.get(row_*3 -1).getPlayer()
         const tile1Player=this.gameTiles.get(row_*3 - 2).getPlayer()
 
-        console.log(` rowWin tile 1 ${tile1Player} tile 2 ${tile2Player} tile 3 ${tile3Player}`)
+        // console.log(` rowWin tile 1 ${tile1Player} tile 2 ${tile2Player} tile 3 ${tile3Player}`)
 
         // compare players 
         if(tile1Player==tile2Player && tile1Player==tile3Player){
@@ -195,7 +208,7 @@ class GameBoard {
 
     diagWin(){
 
-        console.log(`diag win check`)
+        // console.log(`diag win check`)
        
         const tile1=this.gameTiles.get(1).getPlayer()
         const tile5=this.gameTiles.get(5).getPlayer()
@@ -219,11 +232,11 @@ class GameBoard {
 
 
     showGameBoard(){
-        console.log(`${this.gameTiles.get(1).getMark()} ${this.gameTiles.get(2).getMark()} ${this.gameTiles.get(3).getMark()}`)
-        console.log(`${this.gameTiles.get(4).getMark()} ${this.gameTiles.get(4).getMark()} ${this.gameTiles.get(5).getMark()}`)
+       console.log(`${this.gameTiles.get(1).getMark()} ${this.gameTiles.get(2).getMark()} ${this.gameTiles.get(3).getMark()}`)
+        console.log(`${this.gameTiles.get(4).getMark()} ${this.gameTiles.get(5).getMark()} ${this.gameTiles.get(6).getMark()}`)
         console.log(`${this.gameTiles.get(7).getMark()} ${this.gameTiles.get(8).getMark()} ${this.gameTiles.get(9).getMark()}`)
-
-    }
+        // console.log(`${this.gameTiles.get(1)} `)
+    }   
 
 
     
@@ -233,6 +246,7 @@ class GameBoard {
 
 
 let a = new GameBoard
-
+a.addPlayer('jesus','J')
+a.addPlayer('sam','S')
 
 
