@@ -55,11 +55,11 @@ class GameBoard {
     constructor(){
         this.numOfTiles=9; // used to set up gameboard at start()
         this.gameTiles= new Map; // holds tiles for game
-        this.players=[];
+        this.players=[]; //objects containing player name and mark
         this.currentPlayer=0;
         this.turnNumber=1
 
-        this.start()
+        this.start() // initialize game board
 
     }
     
@@ -67,7 +67,7 @@ class GameBoard {
     start(tileDomClass_='.game-tile'){
         console.log('game board and tiles generated')
 
-        // put tiles into map
+        // create and put tiles into map 
         for(let i =0; i<this.numOfTiles;i++){
             this.gameTiles.set(i+1,new Tile(i+1))
         }
@@ -94,28 +94,55 @@ class GameBoard {
     }
 
     //play tic tac toe game
+    //call every turn
     play(tileId_=1){
-        if(this.turnNumber<10){
-            const player = this.turnNumber%2 == 0 ? 1 : 0  // gettin player index if odd player[0] even is player[1] 
+        if(this.turnNumber<=9){
+            
+            const player = this.currentPlayer  // gettin player index if odd player[0] even is player[1] 
+
             this.claimTile(tileId_, this.players[ player  ].name, this.players[ player ].mark)
 
+            // this.whosTurn()
+            console.log(this.currentPlayer)
             this.showGameBoard()
             this.turnNumber++
+
+            this.nextPlayer();
+            
         }
         else{
             console.log('game is over all turns used')
+            this.reset();
+            
         }
 
         
     }
 
-    //add players marks
+    //what players turn?  
+    whosTurn(){
+        let whatPlayer=this.players[this.currentPlayer]
+        console.log(whatPlayer)
+        console.log(`turn ${this.turnNumber} ${whatPlayer.name} turn to pick`)
+        return
+    }
+
+    //change to other player depending on how is current player
+    nextPlayer(){
+        if(this.currentPlayer==0){
+            this.currentPlayer=1;
+        }
+        else{
+            this.currentPlayer=0;
+        }
+    }
+
+    //add players and there marks marks
     addPlayer(playerName_='name',playerMark_='playerMark_'){
         let player = {
             name:playerName_,
             mark:playerMark_,
         }
-
         // max of 2 players
         if(this.players.length < 2){
             this.players.push(player)
@@ -127,14 +154,29 @@ class GameBoard {
     }
 
 
-
+    reset(){
+        this.gameTiles.forEach((tile)=>{
+            tile.setMark('')
+            tile.setPlayer('')
+        })
+        this.turnNumber=1;
+    }
 
     //when tile is clicked player property is set and mark is also set
     claimTile(tileId_=1, playerId_='playerName', mark_='testMark'){
-        this.gameTiles.get(tileId_).setPlayer(playerId_) //claim for player
-        this.gameTiles.get(tileId_).setMark(mark_)  //put players mark in it
+        //if game tile is un claimed then you have ability to claim
+        if( this.gameTiles.get(tileId_).getPlayer() == ''){
+            this.gameTiles.get(tileId_).setPlayer(playerId_) //claim for player
+            this.gameTiles.get(tileId_).setMark(mark_)  //put players mark in it
 
-        this.checkWin(tileId_)  // did i win after i placed my mark?
+            this.checkWin(tileId_)  // did i win after i placed my mark?
+        }
+        else{
+            console.log(`tile is unavailable claimTile()`)
+        }
+       
+
+       
     }
 
 
@@ -142,8 +184,9 @@ class GameBoard {
     //check if current tile has won the game
     checkWin(tileId_){
         let whoWon=false;
-        console.log('checking if any one won')
-        // get what row tile is in top to bottom
+        // console.log('checking if any one won')
+
+        // get what row tile is in numbered top to bottom
        const whatRow = tileId_/3 <= 1 ? 1 
        :tileId_/3 <= 2 ? 2 
        :tileId_/3 <= 3 ? 3 : 0
@@ -153,11 +196,12 @@ class GameBoard {
        :tileId_%3 == 2 ? 2 
        :tileId_%3 == 0 ? 3 : 0
 
-       //check if any has won yet
+       //check if someone has won yet
       whoWon =this.rowWin(whatRow) || this.colWin(whatCol) || this.diagWin()
         
       if(whoWon){
           console.log(`this person won ${whoWon}`)
+          this.reset()
       }
       else{
         console.log(`no one wins yet`)
@@ -232,9 +276,9 @@ class GameBoard {
 
 
     showGameBoard(){
-       console.log(`${this.gameTiles.get(1).getMark()} ${this.gameTiles.get(2).getMark()} ${this.gameTiles.get(3).getMark()}`)
-        console.log(`${this.gameTiles.get(4).getMark()} ${this.gameTiles.get(5).getMark()} ${this.gameTiles.get(6).getMark()}`)
-        console.log(`${this.gameTiles.get(7).getMark()} ${this.gameTiles.get(8).getMark()} ${this.gameTiles.get(9).getMark()}`)
+       console.log(`${this.gameTiles.get(1).getMark()} | ${this.gameTiles.get(2).getMark()} | ${this.gameTiles.get(3).getMark()}`)
+        console.log(`${this.gameTiles.get(4).getMark()} | ${this.gameTiles.get(5).getMark()} | ${this.gameTiles.get(6).getMark()}`)
+        console.log(`${this.gameTiles.get(7).getMark()} | ${this.gameTiles.get(8).getMark()} | ${this.gameTiles.get(9).getMark()}`)
         // console.log(`${this.gameTiles.get(1)} `)
     }   
 
