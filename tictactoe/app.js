@@ -63,9 +63,9 @@ class GameBoard {
 
     }
     
-    //initialize tiles 
+    //initialize tiles and game board
     start(tileDomClass_='.game-tile'){
-        console.log('game board and tiles generated')
+        console.log('game board and tiles set up')
 
         // create and put tiles into map 
         for(let i =0; i<this.numOfTiles;i++){
@@ -81,16 +81,35 @@ class GameBoard {
             //get the corresponding game tile from map in game board class
             //by using the dom elements data-tile value
             //currentTile is tile from map inside gameBoard
-            //const currentTile= this.gameTiles.get(tile.dataset.tile)
+
             const currentTile= this.gameTiles.get(+tile.dataset.tile)
+
+            //event to tile added
+           this.addEventToTile(tile)
+
 
            //set the gameTiles domElement property
            currentTile.domElement=tile;
+
 
            //can change inner html with this
         // currentTile.domElement.innerHTML=currentTile.id;
         //    console.log(currentTile)
         })
+    }
+
+//add click event to tile
+    addEventToTile(tile_){
+
+        //this event will happen to element 
+        tile_.addEventListener('click', playerChoice)
+    }
+
+    //when player clicks play method is used with tile dataset from element
+    playerChoice(event_){
+        const tileClicked=event_.target.dataset.tile
+
+        this.play(tileClicked)
     }
 
     //play tic tac toe game
@@ -119,7 +138,7 @@ class GameBoard {
         
     }
 
-    //what players turn?  
+    //what players turn  is it
     whosTurn(){
         let whatPlayer=this.players[this.currentPlayer]
         console.log(whatPlayer)
@@ -129,6 +148,7 @@ class GameBoard {
 
     //change to other player depending on how is current player
     nextPlayer(){
+        //toggle between player 1 and player 2 indexes
         if(this.currentPlayer==0){
             this.currentPlayer=1;
         }
@@ -139,11 +159,12 @@ class GameBoard {
 
     //add players and there marks marks
     addPlayer(playerName_='name',playerMark_='playerMark_'){
+        //create player object
         let player = {
             name:playerName_,
             mark:playerMark_,
         }
-        // max of 2 players
+        // max of 2 players allowed to be in players array
         if(this.players.length < 2){
             this.players.push(player)
         }
@@ -155,6 +176,7 @@ class GameBoard {
 
 
     reset(){
+        //loop through tiles and reset properties
         this.gameTiles.forEach((tile)=>{
             tile.setMark('')
             tile.setPlayer('')
