@@ -73,8 +73,15 @@ class GameBoard {
 
         // create and put tiles into map 
         for(let i =0; i<this.numOfTiles;i++){
+            // this.gameTiles.set(i+1,new Tile(i+1)) //was working but class wont work
             this.gameTiles.set(i+1,new Tile(i+1))
+
+
+
         }
+
+
+
 
         //get the dom elements to use as game tiles
         let domTiles = document.querySelectorAll(tileDomClass_)
