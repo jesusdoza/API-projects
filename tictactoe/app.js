@@ -88,14 +88,13 @@ class GameBoard {
 
             const currentTile= this.gameTiles.get(+tile.dataset.tile)
 
-<<<<<<< HEAD
-            //event to tile added
-           this.addEventToTile(tile)
 
-=======
+            //event to tile added
+         //  this.addEventToTile(tile)
+
             
             // tile.addEventListener('click', GameBoard.playerChoice.bind(GameBoard));
->>>>>>> 5cbe7f08de92ca073ea8b8e7926527f14fbf5381
+
 
            //set the gameTiles domElement property
            currentTile.domElement=tile;
@@ -107,7 +106,6 @@ class GameBoard {
         })
     }
 
-<<<<<<< HEAD
 //add click event to tile
     addEventToTile(tile_){
 
@@ -116,13 +114,12 @@ class GameBoard {
     }
 
     //when player clicks play method is used with tile dataset from element
-    playerChoice(event_){
-        const tileClicked=event_.target.dataset.tile
+    // playerChoice(event_){
+    //     const tileClicked=event_.target.dataset.tile
 
-        this.play(tileClicked)
-    }
+    //     this.play(tileClicked)
+    // }
 
-=======
 
 
      //when player clicks play method is used with
@@ -137,7 +134,6 @@ class GameBoard {
 
 
 
->>>>>>> 5cbe7f08de92ca073ea8b8e7926527f14fbf5381
     //play tic tac toe game
     //call every turn
     play(tileId_=1){
@@ -166,12 +162,7 @@ class GameBoard {
         
     }
 
-<<<<<<< HEAD
     //what players turn  is it
-=======
-   
-    //what players turn?  
->>>>>>> 5cbe7f08de92ca073ea8b8e7926527f14fbf5381
     whosTurn(){
         let whatPlayer=this.players[this.currentPlayer]
         console.log(whatPlayer)
