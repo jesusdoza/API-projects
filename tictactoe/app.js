@@ -16,7 +16,11 @@
 
 // psuedo code above============================================================
 
+let aTiles = document.querySelectorAll('.game-tile')
 
+aTiles.forEach((tile)=>{
+    
+})
 
 
 // tiles class used inside game board
@@ -84,9 +88,14 @@ class GameBoard {
 
             const currentTile= this.gameTiles.get(+tile.dataset.tile)
 
+<<<<<<< HEAD
             //event to tile added
            this.addEventToTile(tile)
 
+=======
+            
+            // tile.addEventListener('click', GameBoard.playerChoice.bind(GameBoard));
+>>>>>>> 5cbe7f08de92ca073ea8b8e7926527f14fbf5381
 
            //set the gameTiles domElement property
            currentTile.domElement=tile;
@@ -98,6 +107,7 @@ class GameBoard {
         })
     }
 
+<<<<<<< HEAD
 //add click event to tile
     addEventToTile(tile_){
 
@@ -112,18 +122,36 @@ class GameBoard {
         this.play(tileClicked)
     }
 
+=======
+
+
+     //when player clicks play method is used with
+    // tile dataset from element
+    playerChoice(event_){
+        let tileClicked=event_.target.dataset.tile;
+        console.log('clicked');
+        console.log(tileClicked)
+        this.play(tileClicked)
+    }
+
+
+
+
+>>>>>>> 5cbe7f08de92ca073ea8b8e7926527f14fbf5381
     //play tic tac toe game
     //call every turn
     play(tileId_=1){
+        console.log('play')
+        console.log(`tile number is : ${tileId_}`)
         if(this.turnNumber<=9){
             
             const player = this.currentPlayer  // gettin player index if odd player[0] even is player[1] 
-
+            console.log(`player is ${player}`)
             this.claimTile(tileId_, this.players[ player  ].name, this.players[ player ].mark)
 
             // this.whosTurn()
-            console.log(this.currentPlayer)
-            this.showGameBoard()
+            // console.log(this.currentPlayer)
+            // this.showGameBoard()
             this.turnNumber++
 
             this.nextPlayer();
@@ -138,12 +166,17 @@ class GameBoard {
         
     }
 
+<<<<<<< HEAD
     //what players turn  is it
+=======
+   
+    //what players turn?  
+>>>>>>> 5cbe7f08de92ca073ea8b8e7926527f14fbf5381
     whosTurn(){
         let whatPlayer=this.players[this.currentPlayer]
         console.log(whatPlayer)
         console.log(`turn ${this.turnNumber} ${whatPlayer.name} turn to pick`)
-        return
+        
     }
 
     //change to other player depending on how is current player
@@ -186,6 +219,8 @@ class GameBoard {
 
     //when tile is clicked player property is set and mark is also set
     claimTile(tileId_=1, playerId_='playerName', mark_='testMark'){
+        console.log('claimtile')
+
         //if game tile is un claimed then you have ability to claim
         if( this.gameTiles.get(tileId_).getPlayer() == ''){
             this.gameTiles.get(tileId_).setPlayer(playerId_) //claim for player
@@ -301,7 +336,10 @@ class GameBoard {
        console.log(`${this.gameTiles.get(1).getMark()} | ${this.gameTiles.get(2).getMark()} | ${this.gameTiles.get(3).getMark()}`)
         console.log(`${this.gameTiles.get(4).getMark()} | ${this.gameTiles.get(5).getMark()} | ${this.gameTiles.get(6).getMark()}`)
         console.log(`${this.gameTiles.get(7).getMark()} | ${this.gameTiles.get(8).getMark()} | ${this.gameTiles.get(9).getMark()}`)
-        // console.log(`${this.gameTiles.get(1)} `)
+        // console.log(`${this.play} `)
+
+        // console.log(`${this.whosTurn} `)
+       
     }   
 
 
@@ -311,8 +349,16 @@ class GameBoard {
 }
 
 
+
+
 let a = new GameBoard
+
+
+
 a.addPlayer('jesus','J')
 a.addPlayer('sam','S')
 
 
+document.querySelectorAll('.game-tile').forEach(tile => {
+    tile.addEventListener('click', a.playerChoice.bind(a))
+});
