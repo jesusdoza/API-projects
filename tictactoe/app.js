@@ -16,11 +16,6 @@
 
 // psuedo code above============================================================
 
-let aTiles = document.querySelectorAll('.game-tile')
-
-aTiles.forEach((tile)=>{
-    
-})
 
 
 // tiles class used inside game board
@@ -66,6 +61,19 @@ class GameBoard {
         this.start() // initialize game board
 
     }
+
+   Tile2(id_){
+       return {
+           type:'tile2',
+           id:id_,
+           mark:'test',
+           player:'',
+           domElement:{},
+        
+
+        
+        }
+   }
     
     //initialize tiles 
     start(tileDomClass_='.game-tile'){
@@ -74,36 +82,24 @@ class GameBoard {
         // create and put tiles into map 
         for(let i =0; i<this.numOfTiles;i++){
             // this.gameTiles.set(i+1,new Tile(i+1)) //was working but class wont work
-            this.gameTiles.set(i+1,new Tile(i+1))
+            this.gameTiles.set(i+1,this.Tile2(i+1))
 
 
 
         }
-
-
-
-
         //get the dom elements to use as game tiles
         let domTiles = document.querySelectorAll(tileDomClass_)
 
         //for each of the dom elements
-        domTiles.forEach((tile)=>{
+        domTiles.forEach((tileElement)=>{
 
-            //get the corresponding game tile from map in game board class
-            //by using the dom elements data-tile value
-            //currentTile is tile from map inside gameBoard
-            //const currentTile= this.gameTiles.get(tile.dataset.tile)
-            const currentTile= this.gameTiles.get(+tile.dataset.tile)
+            //grap tile object that corresponds to tile element on dome
+            const currentTile= this.gameTiles.get(+tileElement.dataset.tile)
 
-            
             // tile.addEventListener('click', GameBoard.playerChoice.bind(GameBoard));
 
            //set the gameTiles domElement property
-           currentTile.domElement=tile;
-
-           //can change inner html with this
-        // currentTile.domElement.innerHTML=currentTile.id;
-        //    console.log(currentTile)
+           currentTile.domElement=tileElement;
         })
     }
 
@@ -115,7 +111,7 @@ class GameBoard {
         let tileClicked=event_.target.dataset.tile;
         console.log('clicked');
         console.log(tileClicked)
-        this.play(tileClicked)
+        this.play(+tileClicked)
     }
 
 
@@ -187,21 +183,27 @@ class GameBoard {
 
     reset(){
         this.gameTiles.forEach((tile)=>{
-            tile.setMark('')
-            tile.setPlayer('')
+            tile.mark=''
+            tile.Player=''
+            tile.domElement.innerHTML='X'
         })
         this.turnNumber=1;
     }
 
     //when tile is clicked player property is set and mark is also set
     claimTile(tileId_=1, playerId_='playerName', mark_='testMark'){
-        console.log('claimtile')
-
-        //if game tile is un claimed then you have ability to claim
-        if( this.gameTiles.get(tileId_).getPlayer() == ''){
-            this.gameTiles.get(tileId_).setPlayer(playerId_) //claim for player
-            this.gameTiles.get(tileId_).setMark(mark_)  //put players mark in it
-
+        console.log('claimtile  function')
+        console.log(`${tileId_} ${playerId_} ${mark_} `)
+        console.log(`${this.gameTiles.get(+tileId_).player}`)
+        console.log(typeof(this.gameTiles.get(+tileId_).player))
+  
+        // if game tile is un claimed then you have ability to claim
+        if( this.gameTiles.get(tileId_).player == ''){
+            console.log('in if claim tile')
+            this.gameTiles.get(tileId_).player=playerId_; //claim for player
+            // console.log(this.gameTiles.get(tileId_).player(playerId_))
+            this.gameTiles.get(tileId_).mark=mark_  //put players mark in it
+            this.gameTiles.get(tileId_).domElement.innerHTML=mark_
             this.checkWin(tileId_)  // did i win after i placed my mark?
         }
         else{
@@ -244,9 +246,9 @@ class GameBoard {
 
 
     colWin(col_){
-       const tile1Player=this.gameTiles.get(col_).getPlayer()   // top of col
-       const tile2Player=this.gameTiles.get(col_+3).getPlayer() // mid of col
-       const tile3Player=this.gameTiles.get(col_+6).getPlayer()  // bottom of col
+       const tile1Player=this.gameTiles.get(col_).player   // top of col
+       const tile2Player=this.gameTiles.get(col_+3).player // mid of col
+       const tile3Player=this.gameTiles.get(col_+6).player  // bottom of col
 
     //    console.log(` colWin tile 1 ${tile1Player} tile 2 ${tile2Player} tile 3 ${tile3Player}`)
 
@@ -267,9 +269,9 @@ class GameBoard {
     //else return false
     rowWin(row_){
        
-        const tile3Player=this.gameTiles.get(row_*3).getPlayer()
-        const tile2Player=this.gameTiles.get(row_*3 -1).getPlayer()
-        const tile1Player=this.gameTiles.get(row_*3 - 2).getPlayer()
+        const tile3Player=this.gameTiles.get(row_*3).player
+        const tile2Player=this.gameTiles.get(row_*3 -1).player
+        const tile1Player=this.gameTiles.get(row_*3 - 2).player
 
         // console.log(` rowWin tile 1 ${tile1Player} tile 2 ${tile2Player} tile 3 ${tile3Player}`)
 
@@ -287,11 +289,11 @@ class GameBoard {
 
         // console.log(`diag win check`)
        
-        const tile1=this.gameTiles.get(1).getPlayer()
-        const tile5=this.gameTiles.get(5).getPlayer()
-        const tile9=this.gameTiles.get(9).getPlayer()
-        const tile3=this.gameTiles.get(3).getPlayer()
-        const tile7=this.gameTiles.get(7).getPlayer()
+        const tile1=this.gameTiles.get(1).player
+        const tile5=this.gameTiles.get(5).player
+        const tile9=this.gameTiles.get(9).player
+        const tile3=this.gameTiles.get(3).player
+        const tile7=this.gameTiles.get(7).player
         
 
         // compare players 
@@ -329,12 +331,13 @@ class GameBoard {
 
 let a = new GameBoard
 
-
+document.querySelectorAll('.game-tile').forEach(tile => {
+    tile.addEventListener('click', a.playerChoice.bind(a))
+});
 
 a.addPlayer('jesus','J')
 a.addPlayer('sam','S')
 
 
-document.querySelectorAll('.game-tile').forEach(tile => {
-    tile.addEventListener('click', a.playerChoice.bind(a))
-});
+
+
