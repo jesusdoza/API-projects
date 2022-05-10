@@ -19,31 +19,31 @@
 
 
 // tiles class used inside game board
- class Tile {
-    constructor(id_) {
-        this.id = id_; // place on board
-        this.mark = 'test'; // holds players mark 
-        this.player=''; //player that has claimed this tile, empty string is falsy
-        this.domElement={};
-        // this.img='some url' // picture to display if wanted later
+//  class Tile {
+//     constructor(id_) {
+//         this.id = id_; // place on board
+//         this.mark = 'test'; // holds players mark 
+//         this.player=''; //player that has claimed this tile, empty string is falsy
+//         this.domElement={};
+//         // this.img='some url' // picture to display if wanted later
         
-    };
+//     };
 
-    setMark(mark_) {
-        this.mark = mark_;
-        this.domElement.innerHTML=mark_;
-    };
+//     setMark(mark_) {
+//         this.mark = mark_;
+//         this.domElement.innerHTML=mark_;
+//     };
 
-    setPlayer(playerId_){
-        this.player=playerId_;
-    };
-    getMark(mark_) {
-        return this.mark;
-    };
-    getPlayer() {
-        return this.player;
-    };
-}
+//     setPlayer(playerId_){
+//         this.player=playerId_;
+//     };
+//     getMark(mark_) {
+//         return this.mark;
+//     };
+//     getPlayer() {
+//         return this.player;
+//     };
+// }
 
 
 
@@ -62,6 +62,7 @@ class GameBoard {
 
     }
 
+    //tile object is used by game board to keep track of what tiles are claimed by what player
    Tile2(id_){
        return {
            type:'tile2',
@@ -77,7 +78,7 @@ class GameBoard {
     
     //initialize tiles 
     start(tileDomClass_='.game-tile'){
-        console.log('game board and tiles generated')
+       
 
         // create and put tiles into map 
         for(let i =0; i<this.numOfTiles;i++){
@@ -93,47 +94,40 @@ class GameBoard {
         //for each of the dom elements
         domTiles.forEach((tileElement)=>{
 
-            //grap tile object that corresponds to tile element on dome
+            //grap tile object that corresponds to tile element on dom
             const currentTile= this.gameTiles.get(+tileElement.dataset.tile)
-
-            // tile.addEventListener('click', GameBoard.playerChoice.bind(GameBoard));
 
            //set the gameTiles domElement property
            currentTile.domElement=tileElement;
         })
+
+      
     }
 
 
 
-     //when player clicks play method is used with
-    // tile dataset from element
+   //play tic tac toe game
     playerChoice(event_){
         let tileClicked=event_.target.dataset.tile;
-        console.log('clicked');
+
         console.log(tileClicked)
+
+
         this.play(+tileClicked)
     }
 
 
 
 
-    //play tic tac toe game
+    
     //call every turn
     play(tileId_=1){
-        console.log('play')
-        console.log(`tile number is : ${tileId_}`)
+        
         if(this.turnNumber<=9){
             
             const player = this.currentPlayer  // gettin player index if odd player[0] even is player[1] 
             console.log(`player is ${player}`)
             this.claimTile(tileId_, this.players[ player  ].name, this.players[ player ].mark)
-
-            // this.whosTurn()
-            // console.log(this.currentPlayer)
-            // this.showGameBoard()
-            this.turnNumber++
-
-            this.nextPlayer();
             
         }
         else{
@@ -165,10 +159,11 @@ class GameBoard {
     }
 
     //add players and there marks marks
-    addPlayer(playerName_='name',playerMark_='playerMark_'){
+    addPlayer(playerName_='name',playerMark_='playerMark_',image_='https://placekitten.com/408/287'){
         let player = {
             name:playerName_,
             mark:playerMark_,
+            image:image_,
         }
         // max of 2 players
         if(this.players.length < 2){
@@ -183,31 +178,37 @@ class GameBoard {
 
     reset(){
         this.gameTiles.forEach((tile)=>{
-            tile.mark=''
-            tile.Player=''
-            tile.domElement.innerHTML='X'
+            
+            tile.mark='';
+            tile.player='';
+            tile.domElement.innerText='X';
+            
         })
         this.turnNumber=1;
     }
 
     //when tile is clicked player property is set and mark is also set
     claimTile(tileId_=1, playerId_='playerName', mark_='testMark'){
-        console.log('claimtile  function')
-        console.log(`${tileId_} ${playerId_} ${mark_} `)
-        console.log(`${this.gameTiles.get(+tileId_).player}`)
-        console.log(typeof(this.gameTiles.get(+tileId_).player))
   
-        // if game tile is un claimed then you have ability to claim
+        // if game tile is unclaimed then you have ability to claim
         if( this.gameTiles.get(tileId_).player == ''){
-            console.log('in if claim tile')
+            
             this.gameTiles.get(tileId_).player=playerId_; //claim for player
-            // console.log(this.gameTiles.get(tileId_).player(playerId_))
+            
             this.gameTiles.get(tileId_).mark=mark_  //put players mark in it
             this.gameTiles.get(tileId_).domElement.innerHTML=mark_
+
             this.checkWin(tileId_)  // did i win after i placed my mark?
+           
+           //since successfull tile claim add turn and get next player
+            this.turnNumber++
+            this.nextPlayer();
+            this.whosTurn();
+
         }
         else{
             console.log(`tile is unavailable claimTile()`)
+            this.whosTurn();
         }
        
 
@@ -219,7 +220,7 @@ class GameBoard {
     //check if current tile has won the game
     checkWin(tileId_){
         let whoWon=false;
-        // console.log('checking if any one won')
+        
 
         // get what row tile is in numbered top to bottom
        const whatRow = tileId_/3 <= 1 ? 1 
@@ -239,7 +240,7 @@ class GameBoard {
           this.reset()
       }
       else{
-        console.log(`no one wins yet`)
+        // console.log(`no one wins yet`)
       }
        
     }
@@ -258,7 +259,7 @@ class GameBoard {
             return tile1Player
         }
         else{
-            console.log('no col win')
+            // console.log('no col win')
             return false
         }
        
@@ -280,7 +281,7 @@ class GameBoard {
             return tile1Player
         }
         else{
-            console.log('no row win')
+            // console.log('no row win')
             return false
         }
     }
@@ -331,12 +332,14 @@ class GameBoard {
 
 let a = new GameBoard
 
+
 document.querySelectorAll('.game-tile').forEach(tile => {
     tile.addEventListener('click', a.playerChoice.bind(a))
 });
 
 a.addPlayer('jesus','J')
 a.addPlayer('sam','S')
+a.whosTurn()
 
 
 
